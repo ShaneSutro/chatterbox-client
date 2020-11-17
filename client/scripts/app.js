@@ -14,7 +14,7 @@ var App = {
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
-
+    App.fetch(MessagesView.render);
   },
 
   fetch: function(callback = ()=>{}) {
@@ -22,7 +22,7 @@ var App = {
       // examine the response from the server request:
       console.log(data);
 
-      callback();
+      callback(data);
     });
   },
 
@@ -31,7 +31,7 @@ var App = {
     FormView.setStatus(true);
   },
 
-  stopSpinner: function() {
+  stopSpinner: function(data) {
     App.$spinner.fadeOut('fast');
     FormView.setStatus(false);
   }
