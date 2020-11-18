@@ -11,13 +11,18 @@ var FormView = {
   },
 
   handleSubmit: function(event) {
-    // Stop the browser from submitting the form
+  // Stop the browser from submitting the form
     event.preventDefault();
 
     var message = {};
     //create an object to send
     //get the contents of the textbox
-    message.roomname = 'default';
+    console.warn($('#roomname').val());
+    if ($('#roomname').val() === '') {
+      message.roomname = $('#roomselect').val();
+    } else {
+      message.roomname = $('#roomname').val();
+    }
     var textBox = document.getElementById('message');
     message.text = textBox.value;
     message.username = App.username;

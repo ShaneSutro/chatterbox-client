@@ -2,7 +2,8 @@ var App = {
 
   $spinner: $('.spinner img'),
 
-  username: 'anonymous',
+  username: 'Mr. Robot',
+  rooms: [],
 
   initialize: function() {
     App.username = window.location.search.substr(10);

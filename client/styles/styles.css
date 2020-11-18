@@ -72,6 +72,14 @@ form input[type=text] {
     padding: 5px;
 }
 
+form #roomname {
+    display: none;
+}
+
+input.submit {
+    width: 115px;
+}
+
 .chat {
     padding: 5px;
     margin-bottom: 5px;
