@@ -46,10 +46,23 @@ body {
     line-height: 13px;
 }
 
+.refresh {
+    margin: auto;
+    display: flex;
+    width: 150px;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 5px;
+    color: black;
+    border: 2px solid black;
+    justify-content: center;
+}
+
 form {
+    display: flex;
     padding: 20px;
     padding-left: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 form input[type=text] {
@@ -86,5 +99,9 @@ form input[type=text] {
 .friend {
     color: #fff;
     background-color: #0090da;
+}
+
+.chat .roomname {
+    color: grey;
 }
 
