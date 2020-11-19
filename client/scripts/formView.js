@@ -22,17 +22,23 @@ var FormView = {
       message.roomname = $('#roomselect').val();
     } else {
       message.roomname = $('#roomname').val();
+      //select the roomname
+      //re-render
     }
     var textBox = document.getElementById('message');
     message.text = textBox.value;
     message.username = App.username;
 
     Parse.create(message, function() {
-      setTimeout(App.fetch(MessagesView.render), 500);
+      setTimeout(function() {
+        App.fetch(MessagesView.render);
+        setTimeout($('#roomselect').val(message.roomname), 2000);
+      }, 500);
       // $('#chats').load(App.fetch(MessagesView.render));
     });
-
+    console.log($('#roomselect').val());
     textBox.value = '';
+    $('#roomname').val('');
   },
 
   setStatus: function(active) {

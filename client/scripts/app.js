@@ -16,6 +16,7 @@ var App = {
     App.startSpinner();
     App.fetch(App.stopSpinner);
     App.fetch(MessagesView.render);
+    Friends.initialize();
   },
 
   fetch: function(callback = ()=>{}) {

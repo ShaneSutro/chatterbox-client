@@ -11,6 +11,13 @@ var MessagesView = {
     $chats.html('');
     var html = '';
     for (var i = 0; i < data.results.length; i++) {
+
+      if (Friends.friendsList.includes(data.results[i].username)) {
+        data.results[i].friend = 'friend';
+      } else {
+        data.results[i].friend = '';
+      }
+
       if (data.results[i].roomname !== undefined && data.results[i].roomname !== '') {
         if (App.rooms.indexOf(data.results[i].roomname) < 0) {
           App.rooms.push(data.results[i].roomname);

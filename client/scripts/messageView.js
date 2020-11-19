@@ -1,7 +1,7 @@
 var MessageView = {
 
   render: _.template(`
-      <div class="chat">
+      <div class="chat <%-obj.friend%>">
         <div class="username">
           <%- obj.username %>
         </div>

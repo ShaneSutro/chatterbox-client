@@ -32,12 +32,14 @@ var RoomsView = {
       //pass data object and roomname to RoomsView.render
       RoomsView.render(data, roomname);
     });
-
-
   },
 
   unhideRoomInput: function() {
     $('#roomname').show();
   },
+
+  renderRoom: function(roomname) {
+    RoomsView.$select.append(`<option value="${roomname}">${roomname}</option>`);
+  }
 
 };
