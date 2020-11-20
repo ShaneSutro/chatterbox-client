@@ -28,6 +28,14 @@ var App = {
     });
   },
 
+  fetchRoom: function(roomname, callback = ()=>{}) {
+    Parse.filterRoom(roomname, (data) => {
+      console.log('Filered:', data);
+
+      callback(data, roomname);
+    });
+  },
+
   startSpinner: function() {
     App.$spinner.show();
     FormView.setStatus(true);

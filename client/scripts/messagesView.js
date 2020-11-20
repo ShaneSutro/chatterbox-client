@@ -10,6 +10,9 @@ var MessagesView = {
     var $chats = $('#chats');
     $chats.html('');
     var html = '';
+    // debugger;
+    const urlParams = new URLSearchParams(window.location.search);
+    var roomname = urlParams.get('roomname');
     for (var i = 0; i < data.results.length; i++) {
 
       if (Friends.friendsList.includes(data.results[i].username)) {
@@ -25,12 +28,21 @@ var MessagesView = {
         }
       }
       // html += MessageView.render(data.results[i]);
-      var roomname = MessagesView.$roomnames.val();
-      if (data.results[i].roomname === roomname && data.results[i].username !== undefined) {
+      //var roomname = MessagesView.$roomnames.val();
+      if (roomname !== null) {
+        if (data.results[i].roomname === roomname && data.results[i].username !== undefined) {
+          html += MessageView.render(data.results[i]);
+        }
+      } else if (data.results[i].username !== undefined) {
         html += MessageView.render(data.results[i]);
       }
+
+    }
+    if (roomname !== null) {
+      MessagesView.$roomnames.val(roomname);
     }
     $chats.append(html);
+
   },
 
 

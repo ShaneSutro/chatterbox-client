@@ -4,14 +4,15 @@ var Friends = {
   friendsList: [],
 
   initialize: function() {
-    Friends.$chats.on('click', '.username', Friends.handleAddFriend);
-
+    Friends.$chats.on('click', '.username', Friends.toggleStatus);
   },
 
 
-  handleAddFriend: function(event) {
-    Friends.friendsList.push($(this).text().trim());
-    App.fetch(MessagesView.render);
+  toggleStatus: function(event) {
+    if (!Friends.friendsList.includes($(this).text().trim())) {
+      Friends.friendsList.push($(this).text().trim());
+      App.fetch(MessagesView.render);
+    }
   }
 
 };

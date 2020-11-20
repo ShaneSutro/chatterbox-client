@@ -5,9 +5,6 @@ var MessageView = {
         <div class="username">
           <%- obj.username %>
         </div>
-        <div class="roomname">
-          <%- obj.roomname %>
-        </div>
         <div class="text">
           <%- obj.text %>
         </div>

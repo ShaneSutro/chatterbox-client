@@ -15,8 +15,15 @@ var RoomsView = {
     $chats.html('');
     var html = '';
     for (var i = 0; i < data.results.length; i++) {
+
+      if (Friends.friendsList.includes(data.results[i].username)) {
+        data.results[i].friend = 'friend';
+      } else {
+        data.results[i].friend = '';
+      }
+
       // html += MessageView.render(data.results[i]);
-      if (data.results[i].roomname === roomname && data.results[i].username !== undefined) {
+      if (data.results[i].username !== undefined) {
         html += MessageView.render(data.results[i]);
       }
     }
@@ -28,9 +35,10 @@ var RoomsView = {
     var roomname = $(this).val();
     console.log(roomname);
     //get data from server
-    App.fetch(function (data) {
+    App.fetchRoom(roomname, function (data) {
       //pass data object and roomname to RoomsView.render
       RoomsView.render(data, roomname);
+      window.open(`file:///Users/ShaneSutro/Desktop/Galvanize/rpt26-chatterbox-client/index.html?username=anonymous&roomname=${encodeURI(roomname)}`);
     });
   },
 
