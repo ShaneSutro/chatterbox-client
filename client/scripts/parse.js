@@ -34,7 +34,7 @@ var Parse = {
     $.ajax({
       url: Parse.server,
       type: 'GET',
-      data: `where={"roomname":"${roomname}"}`,
+      data: {where: {'roomname': `${roomname}`}, order: '-createdAt'},
       // data: { order: '-createdAt' },
       contentType: 'application/json',
       success: successCB,

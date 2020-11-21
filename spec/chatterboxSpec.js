@@ -98,17 +98,16 @@ describe('chatterbox', function() {
       Friends.toggleStatus.restore();
     });
 
-    it('should add a room when clicking add', function() {
-      sinon.spy(Rooms, 'add');
-      var prompt = window.prompt;
-      window.prompt = sinon.stub().returns('testroom');
+    it('should add a room when clicking send message', function() {
+      sinon.spy(FormView, 'handleSubmit');
 
       App.initialize();
-      $('#roomselect').find('button').trigger('click');
-      expect(Rooms.add.called).to.be.true;
+      $('#roomname').val('testroom');
+      $('#message').val('Hello World!');
+      $('#send').find(':submit').trigger('submit');
+      expect(FormView.handleSubmit.called).to.be.true;
 
-      window.prompt = prompt;
-      Rooms.add.restore();
+      FormView.handleSubmit.restore();
     });
 
     it('should try to send a message upon clicking submit', function() {

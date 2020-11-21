@@ -4,6 +4,7 @@ var RoomsView = {
   $select: $('#rooms select'),
   $desiredRoomName: $('#roomname'),
   $addRoomButton: $('#addRoom input[type=submit]'),
+  messageCount: 0,
 
   initialize: function() {
     RoomsView.$select.change(RoomsView.handleSelect);
@@ -12,6 +13,17 @@ var RoomsView = {
 
   render: function(data, roomname) {
     var $chats = $('#chats');
+    if (RoomsView.messageCount !== data.results.length && App.inBackground) {
+      console.log('Updated: ' + data.results.length);
+      //get the difference
+      var count = data.results.length - RoomsView.messageCount;
+      document.title = `(${count}) chatterbox: ${roomname}`;
+      //change the title
+    }
+    if (!App.inBackground) {
+      RoomsView.messageCount = data.results.length;
+    }
+    console.log('Initial: ' + RoomsView.messageCount);
     $chats.html('');
     var html = '';
     for (var i = 0; i < data.results.length; i++) {
@@ -30,6 +42,7 @@ var RoomsView = {
     $chats.append(html);
   },
 
+
   handleSelect: function(event) {
     //Get roomName from select value
     var roomname = $(this).val();
@@ -38,7 +51,10 @@ var RoomsView = {
     App.fetchRoom(roomname, function (data) {
       //pass data object and roomname to RoomsView.render
       RoomsView.render(data, roomname);
-      window.open(`file:///Users/ShaneSutro/Desktop/Galvanize/rpt26-chatterbox-client/index.html?username=anonymous&roomname=${encodeURI(roomname)}`);
+      var newTab = confirm(`Open ${roomname} in a new tab?`);
+      if (newTab) {
+        var newWindow = window.open(`file:///Users/ShaneSutro/Desktop/Galvanize/rpt26-chatterbox-client/index.html?username=anonymous&roomname=${encodeURI(roomname)}&title=chatterbox:%20${roomname}`);
+      }
     });
   },
 

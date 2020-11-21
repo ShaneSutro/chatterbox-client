@@ -4,9 +4,24 @@ var App = {
 
   username: 'Mr. Robot',
   rooms: [],
+  inBackround: false,
 
   initialize: function() {
-    App.username = window.location.search.substr(10);
+    const urlParams = new URLSearchParams(window.location.search);
+    var username = urlParams.get('username') || App.username;
+    // App.username = window.location.search.substr(10);
+
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') {
+        console.log('Visible');
+        App.inBackround = false;
+      } else {
+        console.log('Invisible');
+        App.inBackround = true;
+        //freeze the current count
+        //update the tab title to show unread messages
+      }
+    });
 
     FormView.initialize();
     RoomsView.initialize();
@@ -30,7 +45,7 @@ var App = {
 
   fetchRoom: function(roomname, callback = ()=>{}) {
     Parse.filterRoom(roomname, (data) => {
-      console.log('Filered:', data);
+      console.log('Filtered:', data);
 
       callback(data, roomname);
     });

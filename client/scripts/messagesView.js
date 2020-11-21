@@ -4,6 +4,9 @@ var MessagesView = {
   $roomnames: $('#roomselect'),
 
   initialize: function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    var title = urlParams.get('title');
+    window.document.title = title || 'chatterbox';
   },
 
   render: function(data) {
@@ -24,11 +27,13 @@ var MessagesView = {
       if (data.results[i].roomname !== undefined && data.results[i].roomname !== '') {
         if (App.rooms.indexOf(data.results[i].roomname) < 0) {
           App.rooms.push(data.results[i].roomname);
-          MessagesView.$roomnames.append(`<option value="${data.results[i].roomname}">${data.results[i].roomname}</option>`);
+          var escapeHtml = function (htmlStr) {
+            return htmlStr.replace(/&/g, '\\&').replace(/</g, '\\<').replace(/>/g, '\\>').replace(/"/g, '\\"');
+          };
+          MessagesView.$roomnames.append(`<option value="${data.results[i].roomname}">${escapeHtml(data.results[i].roomname)}</option>`);
         }
       }
-      // html += MessageView.render(data.results[i]);
-      //var roomname = MessagesView.$roomnames.val();
+
       if (roomname !== null) {
         if (data.results[i].roomname === roomname && data.results[i].username !== undefined) {
           html += MessageView.render(data.results[i]);
@@ -42,7 +47,17 @@ var MessagesView = {
       MessagesView.$roomnames.val(roomname);
     }
     $chats.append(html);
+    if (!App.autoRefresh) {
+      MessagesView.autoRefresh(data, roomname);
+    }
+  },
 
+  autoRefresh: function(data, roomname) {
+    App.autoRefresh = setInterval(function() {
+      App.fetchRoom(roomname, function(data) {
+        RoomsView.render(data, roomname);
+      });
+    }, 10000);
   },
 
 

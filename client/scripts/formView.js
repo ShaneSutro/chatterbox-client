@@ -6,7 +6,10 @@ var FormView = {
   initialize: function() {
     FormView.$form.on('submit', FormView.handleSubmit);
     FormView.$refresh.on('click', function() {
-      App.fetch(MessagesView.render);
+      var roomname = $('#roomselect').val();
+      App.fetchRoom(roomname, function(data) {
+        RoomsView.render(data, roomname);
+      });
     });
   },
 
@@ -30,13 +33,20 @@ var FormView = {
     message.username = App.username;
 
     Parse.create(message, function() {
-      setTimeout(function() {
-        App.fetch(MessagesView.render);
-        setTimeout($('#roomselect').val(message.roomname), 2000);
-      }, 500);
-      // $('#chats').load(App.fetch(MessagesView.render));
+      App.fetchRoom(message.roomname, function(data) {
+        RoomsView.render(data, message.roomname);
+      });
     });
-    console.log($('#roomselect').val());
+
+    // Parse.create(message, function() {
+    //   setTimeout(function() {
+    //     App.fetchRoom(message.roomname, function(data) {
+    //       RoomsView.render(data, message.roomname);
+    //     });
+    //   }, 500);
+    // $('#chats').load(App.fetch(MessagesView.render));
+    // });
+    //console.log($('#roomselect').val());
     textBox.value = '';
     $('#roomname').val('');
   },

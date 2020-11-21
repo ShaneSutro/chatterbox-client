@@ -8,9 +8,10 @@ var MessageView = {
         <div class="text">
           <%- obj.text %>
         </div>
+        <div class="roomname">
+          <%- obj.roomname %>
+        </div>
       </div>
     `)
-
-  // render: _.template('Hello <%= username %>')
 
 };
